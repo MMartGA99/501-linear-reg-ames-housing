@@ -9,7 +9,7 @@ myheading1='Predicting Home Sale Prices in Ames, Iowa'
 image1='ames_welcome.jpeg'
 tabtitle = 'Ames Housing'
 sourceurl = 'http://jse.amstat.org/v19n3/decock.pdf'
-githublink = 'https://github.com/plotly-dash-apps/501-linear-reg-ames-housing'
+githublink = 'https://github.com/MMartGA99/501-linear-reg-ames-housing'
 
 
 ########### Initiate the app
@@ -35,8 +35,8 @@ app.layout = html.Div(children=[
                 dcc.Input(id='TotalSF', value=2000, type='number', min=100, max=5000, step=1),
                 html.Div('Single Family Home:'),
                 dcc.Input(id='SingleFam', value=0, type='number', min=0, max=1, step=1),
-                html.Div('Large Neighborhood:'),
-                dcc.Input(id='LargeNeighborhood', value=0, type='number', min=0, max=1, step=1),
+                html.Div('Overall Quality:'),
+                dcc.Input(id='Overall Quality', value=0, type='number', min=1, max=10, step=1),
 
             ], className='four columns'),
             html.Div([
@@ -57,7 +57,7 @@ app.layout = html.Div(children=[
     html.Br(),
     html.Br(),
     html.H4('Regression Equation:'),
-    html.Div('Predicted Price = (- $1,360.5K Baseline) + ($0.7K * Year Built) + ($12.7K * Bathrooms) + (- $7.7K * Bedrooms) + ($0.049K * Total Square Feet) + ($ 25.2K * Single Family Home) + (- $6.6 K * Large Neighborhood)'),
+    html.Div('Predicted Price = (- $875.1K Baseline) + ($418.7 * Year Built) + ($6.9K * Bathrooms) + (- $4.1K * Bedrooms) + ($34.9 * Total Square Feet) + ($21.2K * Single Family Home) + ($19.4 K * Overall Quality)'),
     html.Br(),
     html.A('Google Spreadsheet', href='https://docs.google.com/spreadsheets/d/1q2ustRvY-GcmPO5NYudvsBEGNs5Na5p_8LMeS4oM35U/edit?usp=sharing'),
     html.Br(),
@@ -77,14 +77,15 @@ app.layout = html.Div(children=[
     State(component_id='BedroomAbvGr', component_property='value'),
     State(component_id='TotalSF', component_property='value'),
     State(component_id='SingleFam', component_property='value'),
-    State(component_id='LargeNeighborhood', component_property='value')
+    State(component_id='Overall Quality', component_property='value')
 
 )
-def ames_lr_function(clicks, YearBuilt,Bathrooms,BedroomAbvGr,TotalSF,SingleFam,LargeNeighborhood):
+def ames_lr_function(clicks, YearBuilt,Bathrooms,BedroomAbvGr,TotalSF,SingleFam,OverallQuality):
     if clicks==0:
         return "waiting for inputs"
     else:
-        y = [-1360501.3809 + 704.4287*YearBuilt + 12738.4775*Bathrooms + -7783.1712*BedroomAbvGr + 49.824*TotalSF+ 25282.091*SingleFam+ -6637.2636*LargeNeighborhood]
+        y = [-875139.0225 + 418.7147*YearBuilt + 6926.1816*Bathrooms + -4081.3078*BedroomAbvGr + 34.87*TotalSF+ 21228.5617*SingleFam+ 19373.6902*OverallQuality]
+        #y = [-1360501.3809 + 704.4287*YearBuilt + 12738.4775*Bathrooms + -7783.1712*BedroomAbvGr + 49.824*TotalSF+ 25282.091*SingleFam+ -6637.2636*OverallQuality]
         formatted_y = "${:,.2f}".format(y[0])
         return formatted_y
 
